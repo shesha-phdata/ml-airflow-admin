@@ -3,7 +3,7 @@ version: 0.2
 artifacts:
   files:
     - '**/*'
-  name: admin-dags
+  name: admin_dags
   discard-paths: no
   base-directory: output
 
