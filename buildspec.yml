@@ -1,5 +1,12 @@
 version: 0.2
 
+artifacts:
+  files:
+    - *
+  name: admin-dags
+  discard-paths: yes
+  base-directory: output
+
 phases:
   install:
     runtime-versions:
