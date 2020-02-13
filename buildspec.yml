@@ -10,3 +10,4 @@ phases:
       - time=$(date +%s)
       - mkdir -p output/${time}
       - cp admin_dags/* output/${time}
+      - find ./
