@@ -1,10 +1,8 @@
 version: 0.2
 
 artifacts:
-  files:
-    - '*'
   name: admin-dags
-  discard-paths: yes
+  discard-paths: no
   base-directory: output
 
 phases:
