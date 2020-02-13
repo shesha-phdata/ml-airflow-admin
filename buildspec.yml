@@ -8,5 +8,5 @@ phases:
     commands:
       - echo Build started on `date`
       - time=$(date +%s)
-      - mkdir output/${time}
+      - mkdir -p output/${time}
       - cp admin_dags/* output/${time}
