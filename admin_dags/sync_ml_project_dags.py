@@ -61,19 +61,25 @@ def sync_project_dags(**kwargs):
         s3 = boto3.client('s3')
 
         timestamps = []
-        query = {
-            "Bucket": b,
-            "Prefix": "code/dags/",
-            "Delimiter": "/",
-        }
-        while True:
-            r = s3.list_objects_v2(**query)
-            prefixes = r.get('CommonPrefixes', [])
-            timestamps.extend([prefix['Prefix'].split('/')[2] for prefix in prefixes])
-            try:
-                query['ContinuationToken'] = r['NextContinuationToken']
-            except KeyError:
-                break
+        try:
+            query = {
+                "Bucket": b,
+                "Prefix": "code/dags/",
+                "Delimiter": "/",
+            }
+            while True:
+                r = s3.list_objects_v2(**query)
+                prefixes = r.get('CommonPrefixes', [])
+                timestamps.extend([prefix['Prefix'].split('/')[2] for prefix in prefixes])
+                try:
+                    query['ContinuationToken'] = r['NextContinuationToken']
+                except KeyError:
+                    break
+        except Exception as e:
+            print(f"Listing bucket {b} failed: {str(e)}")
+
+        if not len(timestamps):
+            continue
 
         timestamps.sort()
         latest = timestamps[-1]
