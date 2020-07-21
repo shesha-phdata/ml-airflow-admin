@@ -97,10 +97,12 @@ def sync_project_dags(**kwargs):
         print(f"Running check command: {cmd}")
         try:
             subprocess.run(cmd, env={'AIRFLOW_HOME': f"{temp_directory}/afhome"},
-                            shell=True, check=True)
-        except subprocess.CalledProcessError:
+                            shell=True, capture_output=True, check=True)
+        except subprocess.CalledProcessError as cpe:
             print(f"ERROR: Refusing to sync project {projname} due to DAG "
                    "validation errors.")
+            print(f"STDOUT: {cpe.stdout}")
+            print(f"STDERR: {cpe.stderr}")
             has_failures = True
             continue
 
