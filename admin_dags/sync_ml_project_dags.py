@@ -88,7 +88,7 @@ def sync_project_dags(**kwargs):
         projname = b[len(bucket_start):]
         print(f"SYNC START: {projname}")
         os.mkdir(projname)
-        cmd = f"aws s3 sync --delete --no-progress s3://{b}/code/dags/{latest}/ ./{projname}"
+        cmd = f"aws s3 sync --exact-timestamps --delete --no-progress s3://{b}/code/dags/{latest}/ ./{projname}"
         print(f"Running s3->local sync for {projname}: {cmd}")
         subprocess.run(cmd, shell=True)
 
